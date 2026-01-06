@@ -1,12 +1,13 @@
-from django.conf import settings
-from django.test import TestCase
-from django.urls import reverse
 from datetime import datetime, timedelta
-from django.utils import timezone
+
+from django.conf import settings
 # Импортируем функцию для получения модели пользователя.
 from django.contrib.auth import get_user_model
-from news.forms import CommentForm
+from django.test import TestCase
+from django.urls import reverse
+from django.utils import timezone
 
+from news.forms import CommentForm
 from news.models import Comment, News
 
 User = get_user_model()
@@ -58,7 +59,7 @@ class TestHomePage(TestCase):
 class TestDetailPage(TestCase):
 
     @classmethod
-    def setUpTestData(cls):      
+    def setUpTestData(cls):
         cls.news = News.objects.create(
             title='Тестовая новость', text='Просто текст.'
         )
@@ -111,7 +112,6 @@ class TestDetailPage(TestCase):
         # Проверим, что объект формы соответствует нужному классу формы.
         self.assertIsInstance(response.context['form'], CommentForm)
 
-
     # @classmethod
     # def setUpTestData(cls):
     #     for index in range(settings.NEWS_COUNT_ON_HOME_PAGE + 1):
@@ -121,7 +121,7 @@ class TestDetailPage(TestCase):
     # def setUpTestData(cls):
     #     for index in range(settings.NEWS_COUNT_ON_HOME_PAGE + 1):
     #         news = News(title=f'Новость {index}', text='Просто текст.')
-    #         news.save() 
+    #         news.save()
 
 # Для одновременного создания нескольких объектов применяют метод bulk_create():
 

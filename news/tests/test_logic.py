@@ -84,8 +84,8 @@ class TestCommentCreation(TestCase):
 
 # Проверка удаления и редактирования комментария
 class TestCommentEditDelete(TestCase):
-    # Тексты для комментариев не нужно дополнительно создавать 
-    # (в отличие от объектов в БД), им не нужны ссылки на self или cls, 
+    # Тексты для комментариев не нужно дополнительно создавать
+    # (в отличие от объектов в БД), им не нужны ссылки на self или cls,
     # поэтому их можно перечислить просто в атрибутах класса.
     COMMENT_TEXT = 'Текст комментария'
     NEW_COMMENT_TEXT = 'Обновлённый комментарий'
@@ -95,8 +95,10 @@ class TestCommentEditDelete(TestCase):
         # Создаём новость в БД.
         cls.news = News.objects.create(title='Заголовок', text='Текст')
         # Формируем адрес блока с комментариями, который понадобится для тестов.
-        news_url = reverse('news:detail', args=(cls.news.id,))  # Адрес новости.
-        cls.url_to_comments = news_url + '#comments'  # Адрес блока с комментариями.
+        # Адрес новости.
+        news_url = reverse('news:detail', args=(cls.news.id,))
+        # Адрес блока с комментариями.
+        cls.url_to_comments = news_url + '#comments'
         # Создаём пользователя - автора комментария.
         cls.author = User.objects.create(username='Автор комментария')
         # Создаём клиент для пользователя-автора.
@@ -141,7 +143,7 @@ class TestCommentEditDelete(TestCase):
     # def test_<любой тест в этом классе>(self):
     #     comments_count = Comment.objects.count()
     #     # В начале теста в БД всегда есть 1 комментарий, созданный в setUpTestData.
-    #     self.assertEqual(comments_count, 1) 
+    #     self.assertEqual(comments_count, 1)
     #     ...  # Остальные строки теста.
 
 # Теперь проверим, что пользователь не может удалить чужой комментарий.

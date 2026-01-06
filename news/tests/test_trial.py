@@ -16,7 +16,7 @@
 #     TEXT = 'Тестовый текст'
 
 #     # В методе класса setUpTestData создаём тестовые объекты.
-#     # Оборачиваем метод соответствующим декоратором.    
+#     # Оборачиваем метод соответствующим декоратором.
 #     @classmethod
 #     def setUpTestData(cls):
 #         # Стандартным методом Django ORM create() создаём объект класса.
@@ -31,15 +31,11 @@
 #         # При помощи обычного ORM-метода посчитаем количество записей в базе.
 #         news_count = News.objects.count()
 #         # Сравним полученное число с единицей.
-#         self.assertEqual(news_count, 1) 
+#         self.assertEqual(news_count, 1)
 
 #     def test_title(self):
 #         # Сравним свойство объекта и ожидаемое значение.
 #         self.assertEqual(self.news.title, self.TITLE)
-
-
-
-
 
 
 # # Импортируем функцию для определения модели пользователя.
@@ -58,22 +54,10 @@
 #         cls.user = User.objects.create(username='testUser')
 #         # Создаём объект клиента.
 #         cls.user_client = Client()
-#         # "Логинимся" в клиенте при помощи метода force_login().        
+#         # "Логинимся" в клиенте при помощи метода force_login().
 #         cls.user_client.force_login(cls.user)
 #         # Теперь через этот клиент можно отправлять запросы
-#         # от имени пользователя с логином "testUser". 
-
-
-
-
-
-
-
-
-
-
-
-
+#         # от имени пользователя с логином "testUser".
 
 
 # class Test(TestCase):
@@ -90,4 +74,3 @@
 
 # # Запустить все тесты проекта.
 # # python manage.py test
-
