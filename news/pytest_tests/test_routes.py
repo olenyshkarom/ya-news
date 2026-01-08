@@ -38,3 +38,57 @@ def test_pages_availability_for_different_users(
 ):
     response = parametrized_client.get(reverse_url)
     assert response.status_code == expected_status
+
+
+
+
+@pytest.mark.parametrize(
+    'reverse_url, parametrized_client, expected_status',
+    [
+        (
+            pytest.lazy_fixture('news_edit_url'),
+            pytest.lazy_fixture('not_author_client'),
+            HTTPStatus.NOT_FOUND
+        ),
+        (
+            pytest.lazy_fixture('news_delete_url'),
+            pytest.lazy_fixture('not_author_client'),
+            HTTPStatus.NOT_FOUND
+        ),
+        (
+            pytest.lazy_fixture('news_edit_url'),
+            pytest.lazy_fixture('author_client'),
+            HTTPStatus.OK
+        ),
+        (
+            pytest.lazy_fixture('news_delete_url'),
+            pytest.lazy_fixture('author_client'),
+            HTTPStatus.OK
+        ),
+        (
+            pytest.lazy_fixture('news_detail_url'),
+            pytest.lazy_fixture('client'),
+            HTTPStatus.OK
+        ),
+        (
+            pytest.lazy_fixture('home_url'),
+            pytest.lazy_fixture('client'),
+            HTTPStatus.OK
+        ),
+        (
+            pytest.lazy_fixture('users_login_url'),
+            pytest.lazy_fixture('client'),
+            HTTPStatus.OK
+        ),
+        (
+            pytest.lazy_fixture('users_signup_url'),
+            pytest.lazy_fixture('client'),
+            HTTPStatus.OK
+        )
+    ],
+)
+def test_pages_availability_for_different_users(
+    comment, reverse_url, parametrized_client, expected_status
+):
+    response = parametrized_client.get(reverse_url)
+    assert response.status_code == expected_status
