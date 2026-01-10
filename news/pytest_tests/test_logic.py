@@ -57,21 +57,23 @@ def test_author_can_delete_comment(
     news_detail_url,
     news_delete_url
 ):
+    comments_count_before = Comment.objects.count()
     url_to_comments = news_detail_url + '#comments'
     response = author_client.delete(news_delete_url)
     assertRedirects(response, url_to_comments)
     assert response.status_code == HTTPStatus.FOUND
-    comments_count = Comment.objects.count()
-    assert comments_count == 0
+    comments_count_after = Comment.objects.count()
+    assert comments_count_before - 1 == comments_count_after
 
 
 def test_user_cant_delete_comment_of_another_user(
     not_author_client, comment, news_delete_url
 ):
+    comments_count_before = Comment.objects.count()
     response = not_author_client.delete(news_delete_url)
     assert response.status_code == HTTPStatus.NOT_FOUND
-    comments_count = Comment.objects.count()
-    assert comments_count == 1
+    comments_count_after = Comment.objects.count()
+    assert comments_count_before == comments_count_after
 
 
 def test_author_can_edit_comment(
@@ -85,10 +87,11 @@ def test_author_can_edit_comment(
     comment_from_db = Comment.objects.get(id=comment.id)
     assert comment_from_db.text == NEW_COMMENT_TEXT
     assert comment.author == comment_from_db.author
+    assert comment.news == news
 
 
 def test_user_cant_edit_comment_of_another_user(
-    not_author_client, comment, news_edit_url
+    not_author_client, news, comment, news_edit_url
 ):
     form_data = {'text': NEW_COMMENT_TEXT}
     response = not_author_client.post(news_edit_url, data=form_data)
@@ -96,3 +99,4 @@ def test_user_cant_edit_comment_of_another_user(
     comment_from_db = Comment.objects.get(id=comment.id)
     assert comment.text == comment_from_db.text
     assert comment.author == comment_from_db.author
+    assert comment.news == news
